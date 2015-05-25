@@ -1,3 +1,5 @@
+//!# SPI Data Access
+
 use super::ffi;
 use super::Polarity;
 
@@ -48,38 +50,47 @@ pub enum ClockDivider {
     Divider1 = 1u16,
 }
 
+/// Initialise SPI mode (sets the pins to the correct mode automatically)
 pub fn begin() {
 	unsafe {ffi::bcm2835_spi_begin()}
 }
 
+/// Set the required bit order
 pub fn set_bit_order(order: BitOrder) {
 	unsafe {ffi::bcm2835_spi_setBitOrder(order as u8)}
 }
 
+/// Set the requierd Data Mode
 pub fn set_data_mode(mode: Mode) {
 	unsafe {ffi::bcm2835_spi_setDataMode(mode as u8)}
 }
 
+/// Set the clock divider
 pub fn set_clock_divider(divider: ClockDivider) {
 	unsafe {ffi::bcm2835_spi_setClockDivider(divider as u16)}
 }
 
+/// Set the Chip Select operation mode
 pub fn chip_select(mode: ChipSelect) {
 	unsafe {ffi::bcm2835_spi_chipSelect(mode as u8)}
 }
 
+/// Set the Chip Select Polarity
 pub fn chip_select_polarity(mode: ChipSelect, active: Polarity) {
 	unsafe {ffi::bcm2835_spi_setChipSelectPolarity(mode as u8, active as u8)}
 }
 
+/// Write a number of bytes to the bus
 pub fn write_bytes(src: &mut [u8]) {
 	unsafe {ffi::bcm2835_spi_writenb(src.as_mut_ptr(), src.len() as u32)}
 }
 
+/// Write and read a number of bytes. The number of bytes read will match the number written.
 pub fn transfer(src: &mut [u8]) {
 	unsafe {ffi::bcm2835_spi_transfernb(src.as_mut_ptr(), src.as_mut_ptr(), src.len() as u32)}
 }
 
+/// Close the SPI connection
 pub fn end() {
 	unsafe {ffi::bcm2835_spi_end()}
 }
