@@ -1,0 +1,8 @@
+[package]
+
+name = "pi_ffi"
+version = "0.0.1"
+authors = ["Peter Smith <peter@orukusaki.co.uk>"]
+
+[dependencies]
+num = "*"
